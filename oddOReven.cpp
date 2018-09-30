@@ -1,27 +1,31 @@
-//C++ program to create a file.
-
-#include <iostream>
-#include <fstream>
-
+#include<iostream>
+#include<fstream>
 using namespace std;
 
 int main()
 {
-   fstream file; //object of fstream class
+	char ch;
+	const char *fileName="sample.txt";
 
-   //opening file "sample.txt" in out(write) mode
-   file.open("sample.txt",ios::out);
+	//declare object
+	ifstream file;
 
-   if(!file)
-   {
-       cout<<"Error in creating file!!!";
-       return 0;
-   }
+	//open file
+	file.open(fileName,ios::in);
+	if(!file)
+	{
+		cout<<"Error in opening file!!!"<<endl;
+		return -1; //return from main
+	}
 
-   cout<<"File created successfully.";
+	//read and print file content
+	while (!file.eof())
+	{
+		file >> noskipws >> ch;	//reading from file
+		cout << ch;	//printing
+	}
+	//close the file
+	file.close();
 
-   //closing the file
-   file.close();
-
-   return 0;
+	return 0;
 }

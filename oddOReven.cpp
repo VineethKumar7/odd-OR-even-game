@@ -1,31 +1,44 @@
-#include<iostream>
-#include<fstream>
+//C++ program to write and read values using variables in/from file.
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 int main()
 {
-	char ch;
-	const char *fileName="sample.txt";
+    char name[30];
+    int age;
+    fstream file;
 
-	//declare object
-	ifstream file;
+    file.open("aaa.txt",ios::out);
+    if(!file)
+    {
+      cout<<"Error in creating file.."<<endl;
+      return 0;
+    }
+    cout<<"\nFile created successfully."<<endl;
 
-	//open file
-	file.open(fileName,ios::in);
-	if(!file)
-	{
-		cout<<"Error in opening file!!!"<<endl;
-		return -1; //return from main
-	}
+    //read values from kb
+    cout<<"Enter your name: ";
+    cin.getline(name,30);
+    cout<<"Enter age: ";
+    cin>>age;
+    //write into file
+    file<<name<<" "<<age<<endl;
 
-	//read and print file content
-	while (!file.eof())
-	{
-		file >> noskipws >> ch;	//reading from file
-		cout << ch;	//printing
-	}
-	//close the file
-	file.close();
+    file.close();
+    cout<<"\nFile saved and closed succesfully."<<endl;
 
-	return 0;
+    //re open file in input mode and read data
+    //open file
+    file.open("aaa.txt",ios::in);
+    if(!file){
+        cout<<"Error in opening file..";
+        return 0;
+    }
+    file>>name;
+    file>>age;
+
+    cout<<"Name: "<<name<<",Age:"<<age<<endl;
+    return 0;
 }

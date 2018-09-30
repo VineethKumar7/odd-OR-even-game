@@ -4,20 +4,19 @@
 
 using namespace std;
 
-int isOddNumber(int userChoise, int systemChoise){
-  int oddNum=1;
-  return (userChoise + systemChoise)%2 != 0;
-}
-int isEvenNumber(int userChoise, int systemChoise){
-  int evenNum=2;
-  return (userChoise + systemChoise)%2 == 0;
+int oddOREven(int Number, int systemChoise){
+  int Num=2; // By default it is even number
+  if((userChoise + systemChoise)%2 != 0){
+    Num=1;
+  }
+  return Num;
 }
 
 int main()
 {
     char player1[30], oddEven[4];
     fstream file;
-    int age;
+    int Number;
     int userChoise,systemChoise,won;
     file.open("Game Score Card.txt",ios::out);
     if(!file)
@@ -31,26 +30,17 @@ int main()
     //read values from User
     cout<<"Enter the player name ";
     cin.getline(player1,30);
-    cout<<"\n Choose option \n 1. ODD \n 2.EVEN \n"; //Choise
-    cin>>oddEven;
-    if('ODD' == oddEven || 'odd' == oddEven || '1' == oddEven){
-      userChoise=1;
+    cout<<"\n Enter a number between 1-6 \n"; //Choise
+    cin>>Number;
+    //For ODD number
+    if(Number % 2 != 0 ){
+      userChoise=1; // Note here 1 indicates it is a odd Number
       systemChoise = rand() % 2 + 1; //random number between 1 and 2
-      /*
-        odd(userChoise + systemChoise) or eveb similar to the player oddEven then he won.
-      */
-      if((userChoise+systemChoise)%2 == 0){//
 
+      if(oddOREven(Number) == userChoise){//
+        cout<<"\n Player Won the choise \n";
       }else{
-
-      }
-    }else if('EVEN' == oddEven || 'even' == oddEven || '2' == oddEven){
-      userChoise=1;
-      systemChoise = rand() % 2 + 1; //random number between 1 and 2
-      if(isOddNumber(userChoise,systemChoise)){
-
-      }else{
-
+        cout<<"\n System Won the choise \n";
       }
     }
 

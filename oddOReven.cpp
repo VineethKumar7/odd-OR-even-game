@@ -8,16 +8,104 @@ using namespace std;
 int userOddEven(int num){
   return num%2!=0;
 }
-int verify(number){
+int verify(int number){
   if(number>=1 && number<=6){
     return 1;
   }
   return 0;
 }
+void current_game(int game_Array[1],int result[1]);
 
-int current_game(int game_Array[],int result[]){
+int main(){
+  char player1[30], oddEven[4];
+  fstream file;
+  int result[1];
+  int Number,flag1=0,flag2=0,batting,game_Array[1];
+  int check1,check2,check3,systemChoise,won;
+  file.open("Game Score Card.txt",ios::out);
+  if(!file)
+  {
+    cout<<"Error in creating file.."<<endl;
+    return 0;
+  }
+  //Terminal instructions
+  cout<<"\n \t------ODD OR EVEN GAME------\t"<<endl;
+
+  //read values from User
+  cout<<"Enter the player name ";
+  cin.getline(player1,30);
+
+
+
+
+
+  while(flag1==0){
+    while (flag2==0) {
+      cout<<"\n Enter a number between 1-6 \n"; //Choise
+      cin>>Number;
+      if(verify(Number)){
+        flag2=1;
+      }
+    }
+    check1= userOddEven(Number);
+    systemChoise = rand() % 6 + 1; //random number between 1 and 6
+    cout<<"\n The system choise is : "<<systemChoise;
+    check2=userOddEven(systemChoise);
+
+    // This will check whether both the inputs are equal or not.
+    if(check1 != check2){
+      flag1 =1;
+    }
+  }
+  cout<<"\n Exited the while loop";
+  check3 = (Number + systemChoise) % 2;
+/*
+game_Array[0] is for User
+game_Array[1] is for System
+*/
+
+  if(check1 == check3){
+    cout<<"\n Player Won the toss";
+    cout<<"\n Choose 1 for batting and 0 for bowling \n";
+    cin>>batting;
+    if(batting==1){
+      cout<<"Player Won the toss and coose to batting";
+      file<<"player1 Won the toss and"<<"choose batting"<<endl;
+      game_Array[0]=1;
+      game_Array[1]=0;
+      current_game(game_Array,result);
+    }else{
+      cout<<"Player Won the toss and choose to bowiling";
+      file<<"player1 Won the toss and"<<"choose bowling"<<endl;
+      game_Array[0]=0;
+      game_Array[1]=1;
+      current_game(game_Array,result);
+    }
+  }else{
+    cout<<"\n System won the choise \n";
+    batting= rand()%1;
+    if(batting==1){
+      cout<<"System Won the toss and choose batting";
+      file<<"System Won the toss and "<<"choose batting"<<endl;
+      game_Array[0]=0;
+      game_Array[1]=1;
+      current_game(game_Array,result);
+  }else{
+    file<<"System Won the toss and choose bowling"<<endl;
+    file<<"System Won the toss and"<<"choose bowling"<<endl;
+    game_Array[0]=1;
+    game_Array[1]=0;
+    current_game(game_Array,result);
+    }
+  }
+  //closing the file
+  file.close();
+  return 0;
+}
+
+void current_game(int game_Array[1],int result[1]){
   fstream file; //object of fstream class
-  int value,flag=0,systemChoise,totalScore1=0,totalScore2=0;
+  int value,flag=0,systemChoise,totalScore1=0,totalScore2=0,out=0;
   //opening file "sample.txt" in out(write) mode
   file.open("Game Score Card.txt",ios::app);
 
@@ -89,94 +177,15 @@ int current_game(int game_Array[],int result[]){
       }else if(totalScore1>totalScore2 && game_Array[0]==1){
         result[0]=1;
     }
-
+    if(result[0]==1){
+      cout<<"User Won the match";
+      file<<"User Won the match"<<endl;
+    }else{
+      cout<<"System Won the match";
+      file<<"System Won the match"<<endl;
+    }
     //closing the file
     file.close();
   }
-  return result;
 }
-
-int main()
-{
-  char player1[30], oddEven[4];
-  fstream file;
-  int result[1]={0,0};
-  int Number,flag=0,batting,game_Array[1];
-  int check1,check2,check3,systemChoise,won;
-  file.open("Game Score Card.txt",ios::out);
-  if(!file)
-  {
-    cout<<"Error in creating file.."<<endl;
-    return 0;
-  }
-  //Terminal instructions
-  cout<<"\n \t------ODD OR EVEN GAME------\t"<<endl;
-
-  //read values from User
-  cout<<"Enter the player name ";
-  cin.getline(player1,30);
-  while(flag==0){
-    cout<<"\n Enter a number between 1-6 \n"; //Choise
-    cin>>Number;
-
-    check1= userOddEven(Number);
-    systemChoise = rand() % 6 + 1; //random number between 1 and 6
-    cout<<"\n The system choise is : "<<systemChoise;
-    check2=userOddEven(systemChoise);
-
-    // This will check whether both the inputs are equal or not.
-    if(check1 != check2){
-      flag =1;
-    }
-  }
-  cout<<"\n Exited the while loop";
-  check3 = (Number + systemChoise) % 2;
-/*
-game_Array[0] is for User
-game_Array[1] is for System
-*/
-
-  if(check1 == check3){
-    cout<<"\n Player Won the toss";
-    cout<<"\n Choose 1 for batting and 0 for bowling \n";
-    cin>>batting;
-    if(batting==1){
-      cout<<"Player Won the toss and coose to batting";
-      file<<"player1 Won the toss and"<<"choose batting"<<endl;
-      game_Array[0]=1;
-      game_Array[1]=0;
-      result=current_game(game_Array,result);
-    }else{
-      cout<<"Player Won the toss and choose to bowiling";
-      file<<"player1 Won the toss and"<<"choose bowling"<<endl;
-      game_Array[0]=0;
-      game_Array[1]=1;
-      result=current_game(game_Array,result);
-    }
-  }else{
-    cout<<"\n System won the choise \n";
-    batting= rand()%1;
-    if(batting==1){
-      cout<<"System Won the toss and choose batting";
-      file<<"System Won the toss and "<<"choose batting"<<endl;
-      game_Array[0]=0;
-      game_Array[1]=1;
-      result=current_game(game_Array,result);
-  }else{
-    file<<"System Won the toss and choose bowling"<<endl;
-    file<<"System Won the toss and"<<"choose bowling"<<endl;
-    game_Array[0]=1;
-    game_Array[1]=0;
-    result=current_game(game_Array,result);
-    }
-  }
-  if(result[0]==1){
-    cout<<"User Won the match";
-    file<<"User Won the match"<<endl;
-  }else{
-    cout<<"System Won the match";
-    file<<"System Won the match"<<endl;
-  }
-  //closing the file
-  file.close();
 }

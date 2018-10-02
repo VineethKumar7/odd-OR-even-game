@@ -8,9 +8,19 @@ using namespace std;
 int userOddEven(int num){
   return num%2!=0;
 }
-int verify(int number){
+int verifySix(int number){
   if(number>=1 && number<=6){
     return 1;
+  }else{
+  cout<<"\n Wrong Value";
+  }
+  return 0;
+}
+int verifyOne(int number){
+  if(number==0 || number==1){
+    return 1;
+  }else{
+  cout<<"\n Wrong Value";
   }
   return 0;
 }
@@ -20,7 +30,7 @@ int main(){
   char player1[30], oddEven[4];
   fstream file;
   int result[1];
-  int Number,flag1=0,flag2=0,batting,game_Array[1];
+  int Number,flag1=0,flag2=0,flag3=0,batting,game_Array[1];
   int check1,check2,check3,systemChoise,won;
   file.open("Game Score Card.txt",ios::out);
   if(!file)
@@ -32,18 +42,14 @@ int main(){
   cout<<"\n \t------ODD OR EVEN GAME------\t"<<endl;
 
   //read values from User
-  cout<<"Enter the player name ";
+  cout<<"Enter the player name : ";
   cin.getline(player1,30);
-
-
-
-
 
   while(flag1==0){
     while (flag2==0) {
-      cout<<"\n Enter a number between 1-6 \n"; //Choise
+      cout<<"\n Enter a number between 1-6 : "; //Choise
       cin>>Number;
-      if(verify(Number)){
+      if(verifySix(Number)){
         flag2=1;
       }
     }
@@ -66,8 +72,14 @@ game_Array[1] is for System
 
   if(check1 == check3){
     cout<<"\n Player Won the toss";
-    cout<<"\n Choose 1 for batting and 0 for bowling \n";
-    cin>>batting;
+    while(flag3==0){
+      cout<<"\n Choose 1 for batting and 0 for bowling \n";
+      cin>>batting;
+      if(verifyOne(batting)){
+        flag3=1;
+      }
+    }
+
     if(batting==1){
       cout<<"Player Won the toss and coose to batting";
       file<<"player1 Won the toss and"<<"choose batting"<<endl;
@@ -119,48 +131,56 @@ void current_game(int game_Array[1],int result[1]){
       out = 1 means that the player is out
     */
     //-----------------First Game -----------------------
+    file<<"------SCORE CARD------"<<endl;
     while(!out){
+      flag=0;
       while (flag==0) {
-        cout<<"\n Enter a number between 1-6";
+        cout<<"\n Enter a number between 1-6 : ";
         cin>>value;
-        if(verify(value)){
+        if(verifySix(value)){
           flag=1;
           totalScore1+=value;
         }
       }
       systemChoise = rand() % 6 + 1; //random number between 1 and 6
       cout<<"\n The system choise is : "<<systemChoise;
-
       if(value == systemChoise)
       {
         out =1;
+        file<<"OUT"<<endl;
       }else{
         file<<value<<endl;
       }
     }
     if(game_Array[1] == 1){
-      cout<<"The second player is Computer";
-      file<<"The second player is Computer"<<endl;
+      cout<<"\n The second player is Computer";
+      file<<"\n The second player is Computer"<<endl;
     }else{
-      cout<<"The second player is Player";
-      file<<"The second player is Player"<<endl;
+      cout<<"\n The second player is Player";
+      file<<"\n The second player is Player"<<endl;
     }
     // -------------Second GAME-----------------
+    out=0;
+    file<<"------SCORE CARD------"<<endl;
     while(!out){
+      flag=0;
       while (flag==0) {
-        cout<<"\n Enter a number between 1-6";
+        cout<<"\n Enter a number between 1-6: ";
         cin>>value;
-        if(verify(value)){
+        if(verifySix(value)){
           flag=1;
           totalScore2+=value;
+          if(totalScore2>totalScore1){ // Stop bolling when the second payer wins.
+            out=1;//Here the out is just a flag it does not indicate he is out.
+          }
         }
       }
       systemChoise = rand() % 6 + 1; //random number between 1 and 6
       cout<<"\n The system choise is : "<<systemChoise;
-
       if(value == systemChoise)
       {
         out =1;
+        file<<"OUT"<<endl;
       }else{
         file<<value<<endl;
       }
@@ -168,24 +188,25 @@ void current_game(int game_Array[1],int result[1]){
     if(game_Array[0]==1){//If user is batting and have high score then
       if(totalScore1>totalScore2 ){
         result[0]=1;
-      }else if(totalScore1>totalScore2 && game_Array[0]==1){
+      }else {
         result[1]=1;
       }
     }else{
       if(totalScore1>totalScore2 ){
         result[1]=1;
-      }else if(totalScore1>totalScore2 && game_Array[0]==1){
+      }else{
         result[0]=1;
     }
+  }
     if(result[0]==1){
-      cout<<"User Won the match";
+      cout<<"\n User Won the match";
       file<<"User Won the match"<<endl;
     }else{
-      cout<<"System Won the match";
+      cout<<"\n System Won the match";
       file<<"System Won the match"<<endl;
     }
     //closing the file
     file.close();
   }
-}
+
 }

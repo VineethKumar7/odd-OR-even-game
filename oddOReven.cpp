@@ -63,7 +63,6 @@ int main(){
       flag1 =1;
     }
   }
-  cout<<"\n Exited the while loop";
   check3 = (Number + systemChoise) % 2;
 /*
 game_Array[0] is for User

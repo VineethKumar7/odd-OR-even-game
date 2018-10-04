@@ -44,8 +44,8 @@ int main(){
   //read values from User
   cout<<"Enter the player name : ";
   cin.getline(player1,30);
-
   while(flag1==0){
+    flag2=0;
     while (flag2==0) {
       cout<<"\n Enter a number between 1-6 : "; //Choise
       cin>>Number;

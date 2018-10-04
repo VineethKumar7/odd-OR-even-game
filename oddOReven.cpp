@@ -153,7 +153,7 @@ void current_game(int game_Array[1],int result[1]){
       }
     }
     file<<"\n The Total Score for palyer 1 : "<<totalScore1<<endl;
-    cout<<"The total score of player 1 is "<<totalScore1;
+    cout<<"\n The total score of player 1 is "<<totalScore1;
     if(game_Array[1] == 1){
       cout<<"\n The second player is Computer";
       file<<"\n The second player is Computer"<<endl;
@@ -188,7 +188,7 @@ void current_game(int game_Array[1],int result[1]){
       }
     }
     file<<"\n The Total Score for palyer 2 : "<<totalScore2<<endl;
-    cout<<"The total score of player 2 is "<<totalScore2;
+    cout<<"\n The total score of player 2 is "<<totalScore2;
     if(game_Array[0]==1){//If user is batting and have high score then
       if(totalScore1>totalScore2 ){
         result[0]=1;
